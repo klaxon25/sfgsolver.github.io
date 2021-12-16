@@ -1,8 +1,5 @@
-/**
- * @license Copyright (c) 2012 @ahmedkotb , kotbcorp [at] gmail.com
- *
- * See the file license.txt for copying permission.
- */
+
+
 var sfgjs = {
     DEFAULT_RADIUS : 12,
     DEFAULT_COLOR : "#228b22",
@@ -1180,6 +1177,7 @@ sfgjs.Path.prototype = {
 
 sfgjs.Node.prototype = {
 
+
     setX : function(x){
         this.x = x;
     },
@@ -1189,6 +1187,7 @@ sfgjs.Node.prototype = {
     },
 
     draw : function(ctx){
+        
         ctx.beginPath();
         ctx.arc(this.x,this.y,this.radius,0,2*Math.PI,false);
         ctx.fillStyle = this.color;
@@ -1207,8 +1206,11 @@ sfgjs.Node.prototype = {
         ctx.font = "bold 11pt Courir";
         ctx.fillText(this.tag,this.x-width/2.0,this.y+height/2.0);
         ctx.restore();
-    },
 
+        
+    },  
+        
+    
     pointInside : function(x,y){
         return Math.abs(this.x-x) < this.radius && Math.abs(this.y-y) < this.radius;
     },
@@ -1701,3 +1703,51 @@ sfgjs.ArcEdge.prototype = {
 
 };
 
+// target elements with the "draggable" class
+interact('.draggable')
+  .draggable({
+    // enable inertial throwing
+    inertia: true,
+    // keep the element within the area of it's parent
+    modifiers: [
+      interact.modifiers.restrictRect({
+        restriction: 'parent',
+        endOnly: true
+      })
+    ],
+    // enable autoScroll
+    autoScroll: true,
+
+    listeners: {
+      // call this function on every dragmove event
+      move: dragMoveListener,
+
+      // call this function on every dragend event
+      end (event) {
+        var textEl = event.target.querySelector('p')
+
+        textEl && (textEl.textContent =
+          'moved a distance of ' +
+          (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
+                     Math.pow(event.pageY - event.y0, 2) | 0))
+            .toFixed(2) + 'px')
+      }
+    }
+  })
+
+function dragMoveListener (event) {
+  var target = event.target
+  // keep the dragged position in the data-x/data-y attributes
+  var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
+  var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
+
+  // translate the element
+  target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
+
+  // update the posiion attributes
+  target.setAttribute('data-x', x)
+  target.setAttribute('data-y', y)
+}
+
+// this function is used later in the resizing and gesture demos
+window.dragMoveListener = dragMoveListener

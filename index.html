@@ -6,21 +6,8 @@
 
 <html>
     <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="sfg.css" type="text/css"/>
         <script type="text/javascript" src="sfg.js"></script>
-        <style>
-            .col-lg-8{
-                position: static;
-            }
-            /* #canvas {
-                width: 100%;
-            } */
-            
-        </style>
         <script type="text/javascript">
             var sfg = null;
             var paths = null;
@@ -235,70 +222,45 @@
         </script>
   </head>
   <body onload = "init()">
-      <div style="padding: 12px;">
+      
+      <hr/>
+      <div>
+          <button id= "addNode" onclick="addNode()" > add node </button>
+          <button id= "addLineEdge" onclick="addLineEdge()" > add line edge </button>
+          <button id= "addArcEdge" onclick="addArcEdge()" > add arc edge </button>
+
+          <button id= "deleteItem" onclick="deleteItem()" > delete selected </button>
+          <button id= "clear" onclick="clearAll()" > clear</button>
+          <button id= "zoomIn" onclick="sfg.zoomIn()" > + </button>
+          <button id= "zoomOut" onclick="sfg.zoomOut()" > - </button>
+          <button id= "editLabel" onclick="editLabel()" > Edit Label</button>
+          <button id= "solve" onclick="solve()" > Solve </button>
           <br/>
-          <div class="row">
-            <div class="col-lg-8" style="float:left;">
-                <div class="mb-1 row">
-                    <div class="col-4">
-                        <button class="btn btn-primary mb-1 " style="width:100%;" id= "addNode" onclick="addNode()" > add node </button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-primary mb-1"style="width:100%;" id= "addLineEdge" onclick="addLineEdge()" > add line edge </button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-primary mb-1" style="width:100%;" id= "addArcEdge" onclick="addArcEdge()" > add arc edge </button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-danger mb-1" style="width:100%;" id= "deleteItem" onclick="deleteItem()" > delete selected </button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-danger mb-1" style="width:100%;" id= "clear" onclick="clearAll()" > clear</button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-info mb-1" style="width:100%;" id= "zoomIn" onclick="sfg.zoomIn()" > + </button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-info mb-1" style="width:100%;" id= "zoomOut" onclick="sfg.zoomOut()" > - </button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-primary mb-1" style="width:100%;" id= "editLabel" onclick="editLabel()" > Edit Label</button>
-                    </div>
-                    <div class="col-4">
-                        <button class="btn btn-success mb-1" style="width:100%;" id= "solve" onclick="solve()" > Solve </button>
-                    </div>
-                  </div>
-                <canvas id="canvas" width="800px" height="400px" style="border:solid;">
-                  sfg canvas
-                </canvas>
-            </div>
-            <div class="col-lg-4 mt-1">
-                <div style="width:170px;overflow-y:auto;display:inline-block" title="click on a symbol to change its value">
-                    <table id="symtable" class="mytable">
-                        <tr>
-                            <th> Symbol </th>
-                            <th> Value </th>
-                        </tr>
-                    </table>
-                </div>
-                <br/>
-                <div class="mt-1">
-                  <button class="btn btn-primary mb-1" onclick="showForwardPaths()" > Forward Paths</button>
-                  <button class="btn btn-primary mb-1" onclick="showLoops()" > Loops </button>
-                </div>
-                <h3 id="pathslisttitle" title="click on a path or a loop to mark it"> loops </h3>
-                <div style="width:170px;overflow-y:auto">
-                    <table id="pathslist" class="mytable">
-                    </table>
-                </div>
-            </div>
+          <div width="600px" style = "float:left;margin-right:20px">
+              <canvas id="canvas" width="800px" height="400px" style="border:solid;">
+                sfg canvas
+              </canvas>
           </div>
-          
-          
+          <div style="height:150px;width:170px;overflow-y:auto;display:inline-block" title="click on a symbol to change its value">
+              <table id="symtable" class="mytable">
+                  <tr>
+                      <th> Symbol </th>
+                      <th> Value </th>
+                  </tr>
+              </table>
+          </div>
+          <br/>
+          <button onclick="showForwardPaths()" > Forward Paths</button>
+          <button onclick="showLoops()" > Loops </button>
+          <h3 id="pathslisttitle" title="click on a path or a loop to mark it"> loops </h3>
+          <div style="height:150px;width:170px;overflow-y:auto">
+              <table id="pathslist" class="mytable">
+              </table>
+          </div>
       </div>
       <div style="clear:left">
         <br/>
-        <div id="results" style="height:80px;width:800px;max-width:100%;border:1px solid black;overflow:auto;padding:10px;resize:both">
+        <div id="results" style="height:80px;width:800px;border:1px solid black;overflow:auto;padding:10px;resize:both">
         </div>
       </div>
 
